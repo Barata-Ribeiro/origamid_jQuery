@@ -22,4 +22,24 @@ $(document).ready(function() {
         });
     });
     
+    $(".menu-nav a[href^='#']").click(function(event){
+        event.preventDefault();
+        
+        const id = $(this).attr("href"),
+              targetOffset = $(id).offset().top,
+              menuHeight = $(".menu").innerHeight();
+        
+        $("html, body").animate({
+            scrollTop: targetOffset - menuHeight
+        }, 500);
+    });
+    
+    $(".logo").click(function(event){
+        event.preventDefault();
+        
+        $("html, body").animate({
+            scrollTop: 0
+        }, 500);
+    });
+    
 });
