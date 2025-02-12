@@ -1,45 +1,67 @@
-$(document).ready(function() {
-    
-    $("[data-group]").each(function() {
+$(document).ready(function () {
+    const ACTIVE_CLASS = "active";
+
+    $("[data-group]").each(function () {
         const $allTargets = $(this).find("[data-target]"),
-              $allClicks = $(this).find("[data-click]"),
-              activeClass = "active";
-        
-        $allTargets.first().addClass(activeClass);
-        $allClicks.first().addClass(activeClass);
-        
-        $allClicks.click(function(event) {
+            $allClicks = $(this).find("[data-click]");
+
+        $allTargets.first().addClass(ACTIVE_CLASS);
+        $allClicks.first().addClass(ACTIVE_CLASS);
+
+        $allClicks.click(function (event) {
             event.preventDefault();
-            
+
             const id = $(this).data("click"),
-                  $target = $(`[data-target=${id}`);
-            
-            $allClicks.removeClass(activeClass);
-            $allTargets.removeClass(activeClass);
-            
-            $target.addClass(activeClass);
-            $(this).addClass(activeClass);
+                $target = $(`[data-target=${id}`);
+
+            $allClicks.removeClass(ACTIVE_CLASS);
+            $allTargets.removeClass(ACTIVE_CLASS);
+
+            $target.addClass(ACTIVE_CLASS);
+            $(this).addClass(ACTIVE_CLASS);
         });
     });
-    
-    $(".menu-nav a[href^='#']").click(function(event){
+
+    $(".menu-nav a[href^='#']").click(function (event) {
         event.preventDefault();
-        
+
         const id = $(this).attr("href"),
-              targetOffset = $(id).offset().top,
-              menuHeight = $(".menu").innerHeight();
-        
-        $("html, body").animate({
-            scrollTop: targetOffset - menuHeight
-        }, 500);
+            targetOffset = $(id).offset().top,
+            menuHeight = $(".menu").innerHeight();
+
+        $("html, body").animate(
+            {
+                scrollTop: targetOffset - menuHeight
+            },
+            500
+        );
     });
-    
-    $(".logo").click(function(event){
-        event.preventDefault();
-        
-        $("html, body").animate({
-            scrollTop: 0
-        }, 500);
+
+    $(".logo").click(function (e) {
+        e.preventDefault();
+        $("html, body").animate(
+            {
+                scrollTop: 0
+            },
+            500
+        );
     });
-    
+
+    $("section").each(function () {
+        const height = $(this).height(),
+            offsetTop = $(this).offset().top,
+            menuHeight = $(".menu").innerHeight(),
+            id = $(this).attr("id"),
+            $itemMenu = $(`a[href^='#${id}']`);
+
+        $(window).scroll(function () {
+            const scrollTop = $(this).scrollTop();
+
+            if (offsetTop - menuHeight < scrollTop && offsetTop + height - menuHeight > scrollTop) {
+                $itemMenu.addClass(ACTIVE_CLASS);
+            } else {
+                $itemMenu.removeClass(ACTIVE_CLASS);
+            }
+        });
+    });
 });
