@@ -69,4 +69,19 @@ $(document).ready(function () {
         $(this).toggleClass(ACTIVE_CLASS);
         $(".mobile-menu").toggleClass(ACTIVE_CLASS);
     });
+    
+    $(".slide > :first").addClass(ACTIVE_CLASS);
+    function rotateSlide() {
+        let activeSlide = $(".slide > .active"),
+              nextSlide = activeSlide.next();
+        
+        if(nextSlide.length === 0) {
+            nextSlide = $(".slide > :first");
+        }
+        
+        activeSlide.removeClass(ACTIVE_CLASS);
+        nextSlide.addClass(ACTIVE_CLASS);
+    }
+    setInterval(rotateSlide, 3000);
+    
 });

@@ -298,3 +298,41 @@ img {
 		text-align: center;
 	}
 }
+
+.introducao {
+	background: black;
+}
+
+.introducao h2 {
+	color: white;
+	text-align: center;
+	font-size: 2em;
+	text-transform: uppercase;
+	letter-spacing: 2px;
+	margin-top: -2em;
+	margin-bottom: 2em;
+	line-height: 0;
+}
+
+.introducao img {
+	display: block;
+	margin: 0 auto;
+	max-width: 100%;
+}
+
+.slide {
+	position: relative;
+	overflow: hidden;
+}
+
+.slide > * {
+	position: absolute;
+	width: 100%;
+	opacity: 0;
+	transition: .5s;
+}
+
+.slide > .active {
+	position: relative;
+	opacity: 1;
+}
