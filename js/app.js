@@ -1,6 +1,7 @@
 $(document).ready(function () {
     const ACTIVE_CLASS = "active";
 
+    // Mudar tag ao click
     $("[data-group]").each(function () {
         const $allTargets = $(this).find("[data-target]"),
             $allClicks = $(this).find("[data-click]");
@@ -22,6 +23,7 @@ $(document).ready(function () {
         });
     });
 
+    // Scroll suave para link interno
     $(".menu-nav a[href^='#']").click(function (event) {
         event.preventDefault();
 
@@ -37,6 +39,7 @@ $(document).ready(function () {
         );
     });
 
+    // Scroll suave para o topo
     $(".logo").click(function (e) {
         e.preventDefault();
         $("html, body").animate(
@@ -47,6 +50,7 @@ $(document).ready(function () {
         );
     });
 
+    // Mudar para active o menu de acordo com a área
     $("section").each(function () {
         const height = $(this).height(),
             offsetTop = $(this).offset().top,
@@ -64,24 +68,38 @@ $(document).ready(function () {
             }
         });
     });
-    
-    $(".mobile-btn").click(function() {
+
+    // Botão do menu mobile
+    $(".mobile-btn").click(function () {
         $(this).toggleClass(ACTIVE_CLASS);
         $(".mobile-menu").toggleClass(ACTIVE_CLASS);
     });
-    
-    $(".slide > :first").addClass(ACTIVE_CLASS);
-    function rotateSlide() {
-        let activeSlide = $(".slide > .active"),
-              nextSlide = activeSlide.next();
+
+    // Slider
+    function slider(sliderName, velocidade) {
+        let sliderClass = `.${sliderName}`,
+            rotate = setInterval(rotateSlide, velocidade);
+
+        $(`${sliderClass} > :first`).addClass(ACTIVE_CLASS);
         
-        if(nextSlide.length === 0) {
-            nextSlide = $(".slide > :first");
+        $(sliderClass).hover(function() {
+            clearInterval(rotate);
+        }, function() {
+            rotate = setInterval(rotateSlide, velocidade);
+        });
+        
+        function rotateSlide() {
+            let activeSlide = $(`${sliderClass} > .${ACTIVE_CLASS}`),
+                nextSlide = activeSlide.next();
+
+            if (nextSlide.length === 0) {
+                nextSlide = $(`${sliderClass} > :first`);
+            }
+
+            activeSlide.removeClass(ACTIVE_CLASS);
+            nextSlide.addClass(ACTIVE_CLASS);
         }
-        
-        activeSlide.removeClass(ACTIVE_CLASS);
-        nextSlide.addClass(ACTIVE_CLASS);
     }
-    setInterval(rotateSlide, 3000);
     
+    slider("introducao", 2000);
 });
