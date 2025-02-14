@@ -81,13 +81,16 @@ $(document).ready(function () {
             rotate = setInterval(rotateSlide, velocidade);
 
         $(`${sliderClass} > :first`).addClass(ACTIVE_CLASS);
-        
-        $(sliderClass).hover(function() {
-            clearInterval(rotate);
-        }, function() {
-            rotate = setInterval(rotateSlide, velocidade);
-        });
-        
+
+        $(sliderClass).hover(
+            function () {
+                clearInterval(rotate);
+            },
+            function () {
+                rotate = setInterval(rotateSlide, velocidade);
+            }
+        );
+
         function rotateSlide() {
             let activeSlide = $(`${sliderClass} > .${ACTIVE_CLASS}`),
                 nextSlide = activeSlide.next();
@@ -100,6 +103,29 @@ $(document).ready(function () {
             nextSlide.addClass(ACTIVE_CLASS);
         }
     }
-    
+
     slider("introducao", 2000);
+
+    // Animação ao Scroll
+    const $target = $("[data-anime='scroll']"),
+        animationClass = "animate",
+        offset = $(window).height() * (3 / 4);
+
+    function animeScrol() {
+        const documentTop = $(window).scrollTop();
+        $target.each(function () {
+            const itemTop = $(this).offset().top;
+            if (documentTop > itemTop - offset) {
+                $(this).addClass(animationClass);
+            } else {
+                $(this).removeClass(animationClass);
+            }
+        });
+    }
+    
+    animeScrol();
+    
+    $(document).scroll(function() {
+        animeScrol();
+    });
 });

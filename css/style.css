@@ -202,7 +202,7 @@ img {
 	float: left;
 }
 
-[data-target] {
+.js [data-target] {
 	opacity: 0;
 	visibility: hidden;
 	transform: translate3d(-50px, 0, 0);
@@ -210,13 +210,13 @@ img {
 	top: 0;
 }
 
-[data-click].active {
+.js [data-click].active {
 	background: var(--main-color);
 	color: white;
 	border-color: var(--main-color);
 }
 
-[data-target].active {
+.js [data-target].active {
 	opacity: 1;
 	visibility: visible;
 	transition: 0.3s;
@@ -329,10 +329,21 @@ img {
 	position: absolute;
 	width: 100%;
 	opacity: 0;
-	transition: .5s;
+	transition: 0.5s;
 }
 
 .slide > .active {
 	position: relative;
 	opacity: 1;
+}
+
+.js [data-anime] {
+	opacity: 0;
+	transform: translate3d(0, -50px, 0);
+	transition: 0.3s;
+}
+
+.js [data-anime].animate {
+	opacity: 1;
+	transform: translate3d(0, 0, 0);
 }
